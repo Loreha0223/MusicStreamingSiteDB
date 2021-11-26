@@ -1,22 +1,13 @@
+
 var audio;
 var playtime = 0;
 var isplay = false;
 var currentTime;
 
-function remotePlayer(){
-	var nowchoosed = playlist[cursor];
-	audio = new Audio("../media/" + nowchoosed + ".mp3");
-
-	document.getElementById("coverimage").src = "image/" + nowchoosed + ".png";
-	document.getElementById("title").innerHTML = nowchoosed;
-	document.getElementById("stitle").innerHTML = nowchoosed;
-	if (playtime == 0){
-		document.getElementById("playtime").innerHTML = "00:00";
-	}
-	document.getElementById("musiclen").innerHTML = playTimelist[cursor];
-}
-
 function play(){
+	audio = new Audio("media/sample.mp3");
+	document.getElementById("coverimage").src = "sample.png";
+	document.getElementById("title").innerHTML = "sample";
 	if(isplay == false){
 		audio.volume = 0.2;
 		audio.currentTime = playtime;

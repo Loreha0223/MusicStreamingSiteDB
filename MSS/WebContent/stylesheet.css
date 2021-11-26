@@ -101,6 +101,11 @@ a, a:hover {
 
 }
 
+#coverimage{
+	height: 160px;
+	width: 160px;
+}
+
 .titlestyle {
 
 	display:inline-block;
