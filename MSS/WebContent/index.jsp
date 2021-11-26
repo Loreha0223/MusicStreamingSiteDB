@@ -1,90 +1,179 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css style -->
+    <link rel="stylesheet" href="indexStyle.css">
+    
+    <!-- web icon -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Blue Lemon</title>
 </head>
 <body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="search-box">
+                    <input class="search-txt" type="text" placeholder="Type to search">
+                    <a class="search-btn" href="#">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </a>
+                </div>
 
-	<%!
-		public void makeTable(JspWriter out, Connection conn, String query) {
-		try{
-			ResultSet result;
-			PreparedStatement pstmt = conn.prepareStatement(query);
-			result = pstmt.executeQuery();
-			
-			out.println("<table style='border-collapse: collapse;'>");
-			out.println("<tr style='border-bottom: solid 1px black; background-color:#DFDFDF;'>");
-			// make table header (use ResultSet's meta data)
-			for(int i=1; i<=result.getMetaData().getColumnCount(); i++)
-				out.println("<td style='padding: 5px;'>" + result.getMetaData().getColumnName(i) + "</td>");
-			out.println("</tr>");
-			
-			// make table rows
-			while(result.next()){
-				out.println("<tr style='border-bottom: solid 1px black;'>");
-				for(int i=1; i<=result.getMetaData().getColumnCount(); i++)
-					out.println("<td style='padding: 5px;'>" + result.getString(i) + "</td>");
-				out.println("</tr>");
-			}
-			out.println("</table>");
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-		}
-	%>
-			
-	<%
-	
-		String IP = "localhost";
-		String SID = "orcl";
-		String PORT = "1521";
-		String USER = "UNIVERSITY";
-		String PASSWORD = "comp322";
-		String URL = "jdbc:oracle:thin:@" + IP + ":" + PORT + ":" + SID;
-	
-		String q1Pname = request.getParameter("q1Pname");
-		String q1Dnumber = request.getParameter("q1Dnumber");
-		String q1Salary = request.getParameter("q1Salary");
-		String q2Supervisor = request.getParameter("q2Supervisor");
-		String q2Address = request.getParameter("q2Address");
-		String q3Pname = request.getParameter("q3Pname");
-		String q4Pname = request.getParameter("q4Pname");
-		String q4WorkingHours = request.getParameter("q4WorkingHours");
-		String q5Supervisor = request.getParameter("q5Supervisor");
-		String qry = request.getParameter("query");
-		
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-		
-		out.println("<h1>Lab #9: Repeating Lab #5-3 vi JSP</h1>");
-		
-		out.println("<h2>------ Q1 Result ------</h2>");
-		String query1 = "SELECT LNAME, MINIT, FNAME FROM EMPLOYEE E WHERE EXISTS (SELECT * FROM WORKS_ON NATURAL JOIN PROJECT WHERE PNAME='" + q1Pname + "' AND ESSN=E.SSN) AND DNO=" + q1Dnumber + " AND SALARY>="+ q1Salary + " ORDER BY LNAME" ;
-		makeTable(out, conn, query1);
-		
-		String query2 = "SELECT DNAME, SSN, LNAME FROM EMPLOYEE JOIN DEPARTMENT ON DNUMBER=DNO WHERE SUPER_SSN='" + q2Supervisor + "' AND ADDRESS LIKE '%" + q2Address + "%'";
-		out.println("<h2>------ Q2 Result ------</h2>");
-		makeTable(out, conn, query2);
-		
-		String query3 = "SELECT LNAME, HOURS FROM (EMPLOYEE JOIN WORKS_ON ON SSN=ESSN) JOIN PROJECT ON PNO=PNUMBER WHERE PNAME='" + q3Pname + "' ORDER BY HOURS DESC";
-		out.println("<h2>------ Q3 Result ------</h2>");
-		makeTable(out, conn, query3);
-		
-		String query4 = "SELECT FNAME, LNAME, HOURS FROM (EMPLOYEE JOIN WORKS_ON ON SSN=ESSN) JOIN PROJECT ON PNO=PNUMBER WHERE PNAME='" + q4Pname + "' AND HOURS>="+ q4WorkingHours + " ORDER BY HOURS";
-		out.println("<h2>------ Q4 Result ------</h2>");
-		makeTable(out, conn, query4);
-		
-		String query5 = "SELECT FNAME, LNAME, DEPENDENT_NAME, RELATIONSHIP FROM EMPLOYEE JOIN DEPENDENT ON SSN=ESSN WHERE SUPER_SSN='" + q5Supervisor + "'";
-		out.println("<h2>------ Q5 Result ------</h2>");
-		makeTable(out, conn, query5);
-		
-		out.println(qry);
-	%>
-
+                <ul class="nav-links">
+                	<li><a class="nav" href="chart.jsp">차트</a></li>
+                    <li><a class="nav" href="#.html">방 목록</a></li>
+                    <li><a class="nav" href="#.html">필요한거 추가</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div id="sidebar">
+        <div class="container">
+            <ul>
+                <li>
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <a href="index.jsp">홈</a>
+                </li>
+                <li>
+                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                    <a href="#">내 라이브러리</a>
+                </li>
+                <li>
+                    <i class="fa fa-heart heart-icon" aria-hidden="true"></i>
+                    <a href="#">좋아요 표시한 곡</a>
+                </li>
+            </ul>
+            <ul class="side-playlist">
+                <h2>플레이리스트</h2>
+                <hr>
+                <ul>
+                    <li>Hip-Hop</li>
+                    <li>Rock</li>
+                    <li>Pop</li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+    <div id="banner">
+        <div class="container">
+            <h2>Genre</h2>
+            <div class="slideshow-container">
+                <div class="mySlides fade" id="first">
+                  <div class="numbertext">1 / 3</div>
+                  <img src="./src/image1.jpg" style="width:100%; height:320px;">
+                  <div class="text">Caption One</div>
+                </div>
+                
+                <div class="mySlides fade">
+                  <div class="numbertext">2 / 3</div>
+                  <img src="./src/image2.jpg" style="width:100%; height:320px;">
+                  <div class="text">Caption Two</div>
+                </div>
+                
+                <div class="mySlides fade">
+                  <div class="numbertext">3 / 3</div>
+                  <img src="./src/image3.jpg" style="width:100%; height:320px;">
+                  <div class="text">Caption Three</div>
+                </div>
+                
+                <!--<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>-->
+                
+                </div>
+                
+                <div class="dots" style="text-align:center">
+                  <span class="dot" onclick="currentSlide(1)"></span> 
+                  <span class="dot" onclick="currentSlide(2)"></span> 
+                  <span class="dot" onclick="currentSlide(3)"></span> 
+                </div>
+        </div>
+    </div>
+    <div id="contents">
+        <div class="container">
+            <h2>Recently Played</h2>
+            <div class="albums">
+                <div class="album kylepatrick">
+                    <img src="src/cover1.jpg">
+                    <span class="title">Kyle Patrick</span>
+                    <span>Kyle Patrick</span>
+                </div>
+                <div class="album the1975">
+                    <img src="src/cover2.jpg">
+                    <span class="title">The 1975</span>
+                    <span>The 1975</span>
+                </div>
+                <div class="album theclickfive">
+                    <img src="src/cover3.jpg">
+                    <span class="title">TCV</span>
+                    <span>the Click Five</span>
+                </div>
+                <div class="album wheatus">
+                    <img src="src/cover4.jpg">
+                    <span class="title">Lemonade</span>
+                    <span>Wheatus</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="playing-album">
+                <img src="src/cover.jpg">             
+                <div class="album-info">
+                    <span class="title">Another Life</span>
+                    <span>Kyle Patrick</span>
+                </div>
+                <i class="fa fa-heart" id="heart-icon" aria-hidden="true"></i>
+            </div>
+            <audio id="player" src="./src/AnotherLife.mp3"></audio>
+            <div class="player">
+                <div class="control">
+                    <i class="fa fa-random play" aria-hidden="true"></i>
+                    <i class="fa fa-step-backward step" aria-hidden="true"></i>
+                    <i class="fa fa-play-circle play-btn" id="playbtn"aria-hidden="true"></i>
+                    <i class="fa fa-step-forward step" aria-hidden="true"></i>
+                    <i class="fa fa-repeat play" aria-hidden="true"></i>
+                </div>
+                <div class="progress-bar">
+                    <div id="current">
+                        0:00
+                    </div>
+                    <div id="bar">
+                        <div id="progress"></div>
+                    </div>
+                    <div id="end">
+                        4:16
+                    </div>
+                </div>               
+            </div>
+            <div class="volume">
+                <div class="volume-container">
+                    <div class="volume-control">
+                        <i class="fa fa-volume-up" id="volume" aria-hidden="true"></i>
+                        <i class="fa fa-desktop" aria-hidden="true"></i>
+                        <i class="fa fa-list-ul" aria-hidden="true"></i>                        
+                    </div>
+                    <div class="volume-bar">
+                        <input type="range", min="0", max="100" value="40" id="myRange" class="slider">
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </footer>
+    <!-- js -->
+	<script type="text/javascript" src="./js/slide.js"></script>
+	<script type="text/javascript" src="./js/player.js"></script>
+	<script type="text/javascript" src="./js/heart.js"></script>
+	<script type="text/javascript" src="./js/mute.js"></script>
 </body>
 </html>
