@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+
+    <title>MSS</title>
+  </head>
+
+  <body>
+    <div id="wrap">
+      <div class="BasicSet" id="header">
+        <b>사이트 제목부분</b>
+      </div>
+
+      <div class="BasicSet" id="menu">
+        <div style="float: left; width: 200px">
+          <a href="profile.html" target="content" onclick="resizing()"
+            ><img src="image/Menu_profile.png" width="200px" height="40px"
+          /></a>
+        </div>
+
+        <div style="float: left; width: 200px">
+          <a href="#" onclick="go_page('20190320')"
+            ><img src="image/Menu_diary.png" width="200px" height="40px"
+          /></a>
+        </div>
+
+        <div
+          style="float: left; width: 200px"
+          onmouseover="openmenu('scraps')"
+          onmouseout="closemenu('scraps')"
+        >
+          <a
+            href="#"
+            onclick="go_page('bigdata')"
+            class="dropdown_scraps_button"
+            ><img src="image/Menu_scraps.png" width="200px" height="40px"
+          /></a>
+          <div id="scraps" class="dropdownBox" style="left: 405px">
+            <center>scraps</center>
+            <hr style="width: 100px; border: solid 1px black" />
+
+            <ul>
+              <li><a href="#" onclick="go_page('bigdata')">빅데이터</a></li>
+              <li><a href="#" onclick="go_page('ai')">인공지능</a></li>
+              <li><a href="#" onclick="go_page('webstandard')">웹 표준</a></li>
+            </ul>
+
+            <center>bookmarks</center>
+
+            <hr style="width: 100px; border: solid 1px black" />
+
+            <ul>
+              <li>
+                <a
+                  href="https://www.onlinegdb.com/online_python_debugger"
+                  target="_blank"
+                  >Online Debugger</a
+                >
+              </li>
+              <li>
+                <a href="https://processing.org/" target="_blank">Processing</a>
+              </li>
+              <li>
+                <a href="http://lms.knu.ac.kr" target="_blank"
+                  >경북대 학습관리시스템</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="float: left; width: 200px">
+          <a href="works.html" target="content" onclick="resizing()"
+            ><img src="image/Menu_works.png" width="200px" height="40px"
+          /></a>
+        </div>
+      </div>
+
+      <iframe id="sidemenu"></iframe>
+
+      <iframe src="front.html" name="content" id="content"></iframe>
+
+      <div class="BasicSet" id="tail">
+        <span style="font-size: 8pt"
+          >Copyright 2019 <b>J.E.</b> All right reserved.</span
+        >
+      </div>
+    </div>
+
+    <script src="functions.js"></script>
+  </body>
+</html>
