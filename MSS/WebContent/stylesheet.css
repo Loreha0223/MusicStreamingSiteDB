@@ -1,0 +1,153 @@
+a, a:hover {
+
+	font-size:8pt;
+	color:black;
+	text-decoration:none;
+
+}
+
+#scraps, #works {
+
+	-moz-transition: all 0.6s; 
+	-webkit-transition: all 0.6s;  
+	-ms-transition: all 0.6s;  
+	-o-transition: all 0.6s;  
+	transition: all 0.6s;  
+
+}
+
+#wrap {
+
+	margin:0 auto;
+	padding:0px;
+	width:820px;
+
+}
+
+#header {
+	
+	padding-top:90px;
+	width:800px;
+	height:20px;
+	border-top:solid 2px black;
+	background-image:url(image/background.jpg);
+	text-align:right;
+
+}
+
+#menu {
+
+	position:relative;
+	margin-bottom:2px;
+	padding:3px;
+	width:804px;
+	border-style:solid none solid none;
+	border-width:2px;
+
+}
+
+#sidemenu {
+
+	float:left;
+	position:relative;
+	margin:0px;
+	padding:0px;
+	width:180px;
+	height:510px;
+	border:none;
+	border-right:dashed 1px black; 
+	display:none;
+
+}
+
+#content {
+
+	float:left;
+	position:relative;
+	margin-bottom:1px;
+	padding:0px;
+	width:810px;
+	height:510px;
+	border:none;
+
+}
+
+#tail {
+
+	width:800px;
+	height:15px;
+	border-top:solid 2px black;
+	text-align:center;
+
+}
+
+.BasicSet {
+
+	float:left;
+    padding:5px;
+
+}
+
+.dropdownBox {
+
+	position:absolute;
+	z-index:1;
+	top:48px;
+	height:2px;
+	width:200px;
+	border-bottom:solid 2px black;
+	background:white;
+	overflow:hidden;
+
+}
+
+#coverimage{
+	height: 160px;
+	width: 160px;
+}
+
+.titlestyle {
+
+	display:inline-block;
+	margin-bottom:5px;
+	font-size:17pt;
+	font-weight:bold;
+
+}
+
+/* scroll style in chrome */
+
+::-webkit-scrollbar-track {
+
+	border:none;
+	background-color:white;
+
+}
+
+::-webkit-scrollbar {
+
+	width:10px;
+	background-color:black;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+	background-color:black;	
+
+}
+
+/* scroll style in edge and explorer */
+
+html {
+
+	scrollbar-3dLight-Color: white;
+	scrollbar-arrow-color: white;
+	scrollbar-base-color: white;
+	scrollbar-Face-Color: black;
+	scrollbar-Track-Color: white;
+	scrollbar-DarkShadow-Color: black;
+	scrollbar-Highlight-Color: white; 
+	scrollbar-Shadow-Color: white;
+
+}
