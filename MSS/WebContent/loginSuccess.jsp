@@ -29,18 +29,7 @@
 		session.setAttribute("account", userType);
 	}
 	
-	System.out.println(account + userType);
+
 	response.sendRedirect("index.jsp");
 
 %>
-<%-- <% --%>
-// 	request.setCharacterEncoding("UTF-8");
-// 	String userid = request.getParameter("userid");
-// 	String password = request.getParameter("password");
-	
-// 	if(userid != null && userid.equals(password)){
-// 		session.setAttribute("userid", userid);
-// 	}
-	
-// 	response.sendRedirect("index.jsp");
-<%-- %> --%>
