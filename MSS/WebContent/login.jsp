@@ -10,8 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- css style -->
-    <link rel="stylesheet" href="indexStyle.css">
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="indexStyle.css">
+
     <!-- web icon -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -72,14 +73,14 @@
             </ul>
         </div>
     </div>
-    <div id="contents">
+    <div id="login-contents">
         <div class="container">
             <h2>로그인</h2>
-            <div class="slideshow-container">
+            <div class="login">
                 <form action="loginSuccess.jsp" method="post">
                 <table border="1" align="center" width="500">
 	                <tr>
-	                	<th colspan="2">로그인</th>
+	                	<th colspan="2">일반 사용자 로그인</th>
 	                </tr>
 	                <tr>
 	                	<td>사용자 아이디</td>
@@ -90,11 +91,15 @@
 	                	<td><input type="password" name="password"></td>
 	               	</tr>
 	               	<tr>
-	               		<th colspan="2"><input type="submit" value="로그인"></th>
+	               		<th colspan="2">
+		               		<label><input type="checkbox" name="account" value="admin">관리자로 로그인</label>
+		               		<input type="submit" value="로그인">
+	               		</th>
 	                </tr>
                 </table>
                 </form>
 			</div>
+			
         </div>
     </div>
 	<footer>

@@ -39,7 +39,11 @@
 							out.println("<li><a class='nav' href='login.jsp'><i class='fa fa-user'></i></a></li>");
 						}else{
 							String userid = (String)session.getAttribute("userid");
-							out.println("<li class='nav'><h5>" + userid + "님</h5></li>");
+							if(session.getAttribute("account") == "admin"){
+								out.println("<li class='nav'><h5>" + userid + "관리자님</h5></li>");
+							}else{
+								out.println("<li class='nav'><h5>" + userid + "님</h5></li>");
+							}
 							out.println("<li><a class='nav' href='logout.jsp'><i class='fa fa-user'></i></a></li>");
 						}
 					%>
