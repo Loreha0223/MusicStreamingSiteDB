@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +11,7 @@
 
     <!-- css style -->
     <link rel="stylesheet" href="indexStyle.css">
-    
+    <link rel="stylesheet" href="login.css">
     <!-- web icon -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -33,7 +32,6 @@
                 	<li><a class="nav" href="chart.jsp">차트</a></li>
                     <li><a class="nav" href="#.html">방 목록</a></li>
                     <li><a class="nav" href="#.html">필요한거 추가</a></li>
-                    
                     <% 
 						if(session.getAttribute("userid")==null){
 							out.println("<li><a class='nav' href='login.jsp'><i class='fa fa-user'></i></a></li>");
@@ -43,7 +41,6 @@
 							out.println("<li><a class='nav' href='logout.jsp'><i class='fa fa-user'></i></a></li>");
 						}
 					%>
-                    
                 </ul>
             </nav>
         </div>
@@ -75,68 +72,32 @@
             </ul>
         </div>
     </div>
-    <div id="banner">
+    <div id="contents">
         <div class="container">
-            <h2>Genre</h2>
+            <h2>로그인</h2>
             <div class="slideshow-container">
-                <div class="mySlides fade" id="first">
-                  <div class="numbertext">1 / 3</div>
-                  <img src="./src/image1.jpg" style="width:100%; height:320px;">
-                  <div class="text">Caption One</div>
-                </div>
-                
-                <div class="mySlides fade">
-                  <div class="numbertext">2 / 3</div>
-                  <img src="./src/image2.jpg" style="width:100%; height:320px;">
-                  <div class="text">Caption Two</div>
-                </div>
-                
-                <div class="mySlides fade">
-                  <div class="numbertext">3 / 3</div>
-                  <img src="./src/image3.jpg" style="width:100%; height:320px;">
-                  <div class="text">Caption Three</div>
-                </div>
-                
-                <!--<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>-->
-                
-            </div>
-                
-			<div class="dots" style="text-align:center">
-			  <span class="dot" onclick="currentSlide(1)"></span> 
-			  <span class="dot" onclick="currentSlide(2)"></span> 
-			  <span class="dot" onclick="currentSlide(3)"></span> 
+                <form action="loginSuccess.jsp" method="post">
+                <table border="1" align="center" width="500">
+	                <tr>
+	                	<th colspan="2">로그인</th>
+	                </tr>
+	                <tr>
+	                	<td>사용자 아이디</td>
+	                	<td><input type="text" name="userid"></td>
+	                </tr>
+	                <tr>
+	                	<td>사용자 암호</td>
+	                	<td><input type="password" name="password"></td>
+	               	</tr>
+	               	<tr>
+	               		<th colspan="2"><input type="submit" value="로그인"></th>
+	                </tr>
+                </table>
+                </form>
 			</div>
         </div>
     </div>
-    <div id="contents">
-        <div class="container">
-            <h2>Recently Played</h2>
-            <div class="albums">
-                <div class="album kylepatrick">
-                    <img src="src/cover1.jpg">
-                    <span class="title">Kyle Patrick</span>
-                    <span>Kyle Patrick</span>
-                </div>
-                <div class="album the1975">
-                    <img src="src/cover2.jpg">
-                    <span class="title">The 1975</span>
-                    <span>The 1975</span>
-                </div>
-                <div class="album theclickfive">
-                    <img src="src/cover3.jpg">
-                    <span class="title">TCV</span>
-                    <span>the Click Five</span>
-                </div>
-                <div class="album wheatus">
-                    <img src="src/cover4.jpg">
-                    <span class="title">Lemonade</span>
-                    <span>Wheatus</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer>
+	<footer>
         <div class="container">
             <div class="playing-album">
                 <img src="src/cover.jpg">             
@@ -181,10 +142,5 @@
             </div>
         </div>
     </footer>
-    <!-- js -->
-	<script type="text/javascript" src="./js/slide.js"></script>
-	<script type="text/javascript" src="./js/player.js"></script>
-	<script type="text/javascript" src="./js/heart.js"></script>
-	<script type="text/javascript" src="./js/mute.js"></script>
 </body>
 </html>
