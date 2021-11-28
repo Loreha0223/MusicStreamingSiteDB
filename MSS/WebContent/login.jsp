@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
+<%@include file="dbConnect.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,9 +68,7 @@
                 <h2>플레이리스트</h2>
                 <hr>
                 <ul>
-                    <li>Hip-Hop</li>
-                    <li>Rock</li>
-                    <li>Pop</li>
+                    <%@include file="playlist.jsp"%>
                 </ul>
             </ul>
         </div>

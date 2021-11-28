@@ -1,4 +1,9 @@
 <%@include file="dbConnect.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!-- import JDBC package -->
+<%@ page language="java" import="java.text.*, java.sql.*" %>
+
 <%
 	String query;
 	ResultSet result;
@@ -10,7 +15,8 @@
 	String account = request.getParameter("account");
 	String userType = null;
 	
-	if (account.equals("admin")){
+	System.out.println(account);
+	if (account != null){
 		userType = "admin";
 		query = "SELECT * FROM ADMIN WHERE adminID='" + userid + "' AND PASSWORD='" + password + "'";
 		result = stmt.executeQuery(query);
