@@ -16,7 +16,7 @@
 					<div class="mySlides fade" id="first">
 						<div class="numbertext">1 / 3</div>
 						<img src="./src/image1.jpg" style="width: 100%; height: 320px;">
-						<!--              참여 기능 완성되면 연결 필요 -->
+						<!--참여 기능 완성되면 연결 필요 -->
 						<div class="text">
 							<a href="#.jsp?roomNo=qia4Z">참여하기</a>
 						</div>

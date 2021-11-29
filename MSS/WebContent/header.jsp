@@ -16,14 +16,13 @@
 			<ul class="nav-links">
 				<li><a class="nav" href="chart.jsp">차트</a></li>
 				<li><a class="nav" href="#.html">방 목록</a></li>
-				<li><a class="nav" href="#.html">필요한거 추가</a></li>
-
 				<%
 					if (session.getAttribute("userid") == null) {
 						out.println("<li><a class='nav' href='login.jsp'><i class='fa fa-user'></i></a></li>");
 					} else {
 						String userid = (String) session.getAttribute("userid");
 						if (session.getAttribute("account") == "admin") {
+							out.println("<li><a class='nav' href='management.jsp'>관리 페이지</a></li>");
 							out.println("<li class='nav'><h5>" + userid + "관리자님</h5></li>");
 						} else {
 							out.println("<li class='nav'><h5>" + userid + "님</h5></li>");
