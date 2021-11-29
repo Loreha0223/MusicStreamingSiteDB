@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	<!-- JavaScript -->
-	<script src="script/search.js"></script>
+	<script src="js/buttonMethods.js"></script>
 
     <title>Blue Lemon</title>
 </head>

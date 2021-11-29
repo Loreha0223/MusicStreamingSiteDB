@@ -1,0 +1,17 @@
+.banButton{
+	border-radius: 40px;
+	background: #222222;
+	color: #d2d2d2;
+	text-align: center;
+	text-decoration: none;
+	transition: 0.4s ease;
+}
+
+.banButton:hover{
+	background: #444444;
+    cursor:pointer;
+}
+
+a{
+	text-decoration: none;
+}
