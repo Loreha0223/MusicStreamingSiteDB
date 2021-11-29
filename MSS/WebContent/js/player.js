@@ -1,6 +1,32 @@
+var setCookie = function(name, value, exp) {
+	var date = new Date();
+	date.setTime(date.getTime() + exp*24*60*60*1000);
+	document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+};
+
+var getCookie = function(name) {
+	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	return value? value[2] : null;
+};
+
+if(getCookie("title") == null){
+	document.getElementById("title").innerHTML = "None";
+	document.getElementById("singer").innerHTML = "-";
+}else{
+	document.getElementById("title").innerHTML = getCookie("title");
+	document.getElementById("singer").innerHTML = getCookie("singer");
+}
+
 var player = document.getElementById("player");
 let progress = document.getElementById("progress");
 let playbtn = document.getElementById("playbtn");
+
+function setPlayer(path, title, singer){
+	document.getElementById("title").innerHTML = title;
+	document.getElementById("singer").innerHTML = singer;
+	setCookie("title", title, 1);
+	setCookie("singer", singer, 1);
+}
 
 var playpause = function(){
     if(player.paused){
