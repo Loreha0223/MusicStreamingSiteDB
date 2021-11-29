@@ -16,6 +16,7 @@
 		<div class="contentBox">
 			<div class="container">
 				<--내용 삽입-->
+			</div>
 		</div>
 		<%@include file="footer.jsp"%>
 	</body>
@@ -25,7 +26,7 @@
  * head -> css, 메타태그가 들어있는 부분
  * header -> 상단바 부분
  * sideBar -> 왼쪽에 있는 사이드바 부분
- * footer -> 
+ * footer -> 하단 플레이어 + 자바스크립트
 
 ## db-connect
 데이터베이스 연결할 때, 맨 위에
