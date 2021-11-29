@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
-<%@ page language="java" import="java.text.*, java.sql.*"%>
+<%@ page language="java" import="java.text.*, java.sql.*" %>
+<%@include file="dbConnect.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,6 @@
 			<%-- <%--             <% --%>
 			<!-- //             	request.setCharacterEncoding("UTF-8"); -->
 			<!-- //             	if(session.getAttribute("rt_msg")==null){ -->
-
 			<!-- //             	}else{ -->
 			<!-- //             		out.println("<h4>"+session.getAttribute("rt_msg")+"</h4>"); -->
 			<!-- //             	} -->
@@ -65,7 +65,6 @@
 					</table>
 				</form>
 			</div>
-
 		</div>
 	</div>
 	<%@include file="footer.jsp"%>
