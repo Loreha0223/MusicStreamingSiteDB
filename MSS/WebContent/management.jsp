@@ -19,8 +19,11 @@
 	
 				while (result.next()) {
 					out.println("<tr>");
-					for(int i=1; i<=result.getMetaData().getColumnCount(); i++)
-						out.println("<td style='border-top: solid 1px black;'>" + result.getString(i) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 10%;'>" + result.getString(1) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 15%;'>" + result.getString(2) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 5%;'>" + result.getString(3) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 40%;'>" + result.getString(4) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 30%;'>" + result.getString(5) + "</td>");
 					out.println("</tr>");
 				}
 			} catch (Exception e) {
@@ -28,7 +31,7 @@
 			}
 		}
 		public void printReportedRoomList(JspWriter out, Connection conn) {
-			String query = "SELECT RoomNo, RoomName, RoomMasterID ReportNo FROM ROOM R WHERE ReportNo > 1 AND NOT EXISTS (SELECT * FROM BAN WHERE RoomNo=R.RoomNo) ORDER BY ReportNo DESC";
+			String query = "SELECT RoomNo, RoomName, RoomMasterID, ReportNo FROM ROOM R WHERE ReportNo > 1 AND NOT EXISTS (SELECT * FROM BAN WHERE RoomNo=R.RoomNo) ORDER BY ReportNo DESC";
 			try {
 				ResultSet result;
 				PreparedStatement pstmt = conn.prepareStatement(query);
@@ -36,10 +39,11 @@
 	
 				while (result.next()) {
 					out.println("<tr>");
-					for(int i=1; i<=result.getMetaData().getColumnCount(); i++)
-						out.println("<td style='border-top: solid 1px black;'>" + result.getString(i) + "</td>");
-					out.println("<td style='border-top: solid 1px black;'><a href='#' onclick=\"banButton('" + result.getString(1) + "')\"><div class='banButton'>BAN</div></a></td>");
-					out.println("<td style='border-top: solid 1px black;'><a href='#' onclick=\"initButton('" + result.getString(1) + "')\"><div class='banButton'>신고 횟수 초기화</div></a></td>");
+					out.println("<td style='border-top: solid 1px black; width: 15%;'>" + result.getString(1) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 50%;'>" + result.getString(2) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 15%;'>" + result.getString(3) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 15%;'>" + result.getString(4) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 5%;'><label><input type='checkbox' name='reportedRoom' value='" + result.getString(1) + "'></label></td>");
 					out.println("</tr>");
 				}
 			} catch (Exception e) {
@@ -55,38 +59,51 @@
 	
 				while (result.next()) {
 					out.println("<tr>");
-					for(int i=1; i<=result.getMetaData().getColumnCount(); i++)
-						out.println("<td style='border-top: solid 1px black;'>" + result.getString(i) + "</td>");
-					out.println("<td style='border-top: solid 1px black;'><a href='#' onclick=\"unbanButton('" + result.getString(1) + "')\"><div class='banButton'>BAN 풀기</div></a></td>");
+					out.println("<td style='border-top: solid 1px black; width: 15%;'>" + result.getString(1) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 50%;'>" + result.getString(2) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 30%;'>" + result.getString(3) + "</td>");
+					out.println("<td style='border-top: solid 1px black; width: 5%;'><label><input type='checkbox' name='bannedRoom' value='" + result.getString(1) + "'></label></td>");
 					out.println("</tr>");
 				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		public void ban(Connection conn, String roomNo, String id){
-			String query = "INSERT INTO BAN VALUES ('" + id + "', '" + roomNo + "')";
+		public void ban(Connection conn, String[] roomNo, String id){
+			String query;
+			PreparedStatement pstmt;
 			try {
-				PreparedStatement pstmt = conn.prepareStatement(query);
-				pstmt.executeUpdate();
+				for(int i=0; i<roomNo.length; i++){
+					query = "INSERT INTO BAN VALUES ('" + id + "', '" + roomNo[i] + "')";
+					pstmt = conn.prepareStatement(query);
+					pstmt.executeUpdate();
+				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		public void unban(Connection conn, String roomNo){
-			String query = "DELETE FROM BAN WHERE RoomNo='" + roomNo + "'";
+		public void unban(Connection conn, String[] roomNo){
+			String query;
+			PreparedStatement pstmt;
 			try {
-				PreparedStatement pstmt = conn.prepareStatement(query);
-				pstmt.executeUpdate();
+				for(int i=0; i<roomNo.length; i++){
+					query = "DELETE FROM BAN WHERE RoomNo='" + roomNo[i] + "'";
+					pstmt = conn.prepareStatement(query);
+					pstmt.executeUpdate();
+				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		public void reportNoInitiate(Connection conn, String roomNo){
-			String query = "UPDATE ROOM SET ReportNo=0 WHERE RoomNo='" + roomNo + "'";
+		public void reportNoInitiate(Connection conn, String[] roomNo){
+			String query;
+			PreparedStatement pstmt;
 			try {
-				PreparedStatement pstmt = conn.prepareStatement(query);
-				pstmt.executeUpdate();
+				for(int i=0; i<roomNo.length; i++){
+					query = "UPDATE ROOM SET ReportNo=0 WHERE RoomNo='" + roomNo[i] + "'";
+					pstmt = conn.prepareStatement(query);
+					pstmt.executeUpdate();
+				}
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -98,28 +115,31 @@
 				<%
 				
 					if(session.getAttribute("account") == "admin"){
-						String roomNo = request.getParameter("ban");
-						String roomNoToUnban = request.getParameter("unban");
-						String roomNoToInit = request.getParameter("init");
+						String ctrl = request.getParameter("control");
+						String[] reportedRoomNo = request.getParameterValues("reportedRoom");
+						String[] bannedRoomNo = request.getParameterValues("bannedRoom");
 						
-						if(roomNo != null && !roomNo.equals("null")){
-							ban(conn, roomNo + "", session.getAttribute("userid") + "");
-						}else if(roomNoToUnban != null && !roomNoToUnban.equals("null")){
-							unban(conn, roomNoToUnban + "");
-						}else if(roomNoToInit != null && !roomNoToInit.equals("null")){
-							reportNoInitiate(conn, roomNoToInit + "");
+						if(ctrl != null){
+							if(ctrl.equals("BAN")){
+								ban(conn, reportedRoomNo, session.getAttribute("userid") + "");
+							}else if(ctrl.equals("Clear")){
+								reportNoInitiate(conn, reportedRoomNo);
+							}else if(ctrl.equals("un-Ban")){
+								unban(conn, bannedRoomNo);
+							}
 						}
 						
-						out.println("<h2>회원 목록</h2>");
 						out.println("<form action='management.jsp' method='POST' id='manage'>");
-						out.println("<input type='hidden' id='ban' name='ban' value='null'><input type='hidden' id='unban' name='unban' value='null'><input type='hidden' id='init' name='init' value='null'>");
+						out.println("<div class='section'>");
+						out.println("<h2>회원 목록</h2>");
+						out.println("<input type='hidden' id='unban' name='unban' value='null'><input type='hidden' id='init' name='init' value='null'>");
 						out.println("<table style='width: 60vw; background: #d2d2d2; color: #222222;'>");
 						out.println("	<tr>");
-						out.println("		<td>ID</td>");
-						out.println("		<td>닉네임</td>");
-						out.println("		<td>성별</td>");
-						out.println("		<td>email</td>");
-						out.println("		<td>phone</td>");
+						out.println("		<td style='width: 10%;'>ID</td>");
+						out.println("		<td style='width: 15%;'>닉네임</td>");
+						out.println("		<td style='width: 5%;'>성별</td>");
+						out.println("		<td style='width: 40%;'>email</td>");
+						out.println("		<td style='width: 30%;'>phone</td>");
 						out.println("	</tr>");
 						out.println("</table>");
 						out.println("<div style='width: 60vw; height: 300px; background: #d2d2d2; overflow: auto;'>");
@@ -127,14 +147,16 @@
 						printPlayerList(out, conn);
 						out.println("	</table>");
 						out.println("</div>");
+						out.println("</div>");
+						out.println("<div class='section'>");
 						out.println("<h2>신고된 방 처리</h2>");
 						out.println("<table style='width: 60vw; background: #d2d2d2; color: #222222;'>");
 						out.println("	<tr>");
-						out.println("		<td>RoomNo</td>");
-						out.println("		<td>제목</td>");
-						out.println("		<td>개설자</td>");
-						out.println("		<td>신고횟수</td>");
-						out.println("		<td>BAN</td>");
+						out.println("		<td style='width: 15%;'>RoomNo</td>");
+						out.println("		<td style='width: 50%;'>제목</td>");
+						out.println("		<td style='width: 15%;'>개설자</td>");
+						out.println("		<td style='width: 15%;'>신고횟수</td>");
+						out.println("		<td style='width: 5%;'></td>");
 						out.println("	</tr>");
 						out.println("</table>");
 						out.println("<div style='width: 60vw; height: 300px; background: #d2d2d2; overflow: auto;'>");
@@ -142,20 +164,27 @@
 						printReportedRoomList(out, conn);
 						out.println("	</table>");
 						out.println("</div>");
+						out.println("<input type='submit' name='control' value='BAN'>");
+						out.println("<input type='submit' name='control' value='Clear'>");
+						out.println("</div>");
+						out.println("<div class='section'>");
 						out.println("<h2>밴한 방 관리</h2>");
 						out.println("<table style='width: 60vw; background: #d2d2d2; color: #222222;'>");
 						out.println("	<tr>");
-						out.println("		<td>RoomNo</td>");
-						out.println("		<td>제목</td>");
-						out.println("		<td>개설자</td>");
-						out.println("		<td>신고횟수</td>");
+						out.println("		<td style='width: 15%;'>RoomNo</td>");
+						out.println("		<td style='width: 50%;'>제목</td>");
+						out.println("		<td style='width: 30%;'>신고횟수</td>");
+						out.println("		<td style='width: 5%;'></td>");
 						out.println("	</tr>");
 						out.println("</table>");
 						out.println("<div style='width: 60vw; height: 300px; background: #d2d2d2; overflow: auto;'>");
 						out.println("	<table style='width: 100%; background: #d2d2d2; color: #222222; border-callpase: callpase;'>");
 						printBannedRoomList(out, conn);
 						out.println("	</table>");
-						out.println("</div></form>");
+						out.println("</div>");
+						out.println("<input type='submit' name='control' value='un-Ban'>");
+						out.println("</div>");
+						out.println("</form>");
 					}else{
 						out.println("관리자 계정만 접근 가능한 페이지입니다.");
 					}

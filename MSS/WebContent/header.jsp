@@ -25,6 +25,7 @@
 							out.println("<li><a class='nav' href='management.jsp'>관리 페이지</a></li>");
 							out.println("<li class='nav'><h5>" + userid + "관리자님</h5></li>");
 						} else {
+							out.println("<li><a class='nav' href='mypage.jsp'>마이 페이지</a></li>");
 							out.println("<li class='nav'><h5>" + userid + "님</h5></li>");
 						}
 						out.println("<li><a class='nav' href='logout.jsp'><i class='fa fa-user'></i></a></li>");

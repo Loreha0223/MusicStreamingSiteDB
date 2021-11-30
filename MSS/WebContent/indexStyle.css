@@ -44,6 +44,12 @@ footer{
     width: 80%;
 }
 
+.section{
+	box-sizing: content-box;
+	margin: 5px;
+	width: 100%;
+}
+
 .contentBox{
 	box-sizing: border-box;
 	padding: 5vh 5vw 15vh 5vw;
