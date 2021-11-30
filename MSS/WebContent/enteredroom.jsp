@@ -12,60 +12,59 @@
 		<div class="contentBox">
 			<div class="container">
 				<%
-					String query = "SELECT ROOMNO, ROOMNAME, PARTICIPANTSNO, IS_ADULT, REPORTNO FROM ROOM WHERE ROOMTYPE='g' ORDER BY PARTICIPANTSNO DESC";
+					String query = "SELECT ROOMNAME, PARTICIPANTSNO FROM ROOM WHERE ROOMNO = 'tc37n'";
 					System.out.println(query);
 					PreparedStatement pstmt = conn.prepareStatement(query);
 					ResultSet rs = pstmt.executeQuery();
-					out.println("<h2>장르방 목록</h2>");
+					while(rs.next()){
+						String RoomName = rs.getString(1);
+						out.println("<h1>" + RoomName +"</h1>");
+						out.println("<h5><h3 style='display: inline;'>"+ rs.getInt(2) + "</h3>명 참가중</h5>");
+					}
+					out.println("<p/><h2>방의 플레이리스트</h2>");
+					query ="SELECT H.ORDERNO, M.MUSICTITLE, S.SNAME, M.LIKES FROM HAS H, MUSIC M, SINGER S, RELEASEMENT R WHERE H.ROOMNO='tc37n' AND H.MUSICID = M.MUSICID AND M.ALBUMID = R.ALBUMID AND R.SINGERID = S.SINGERID";		
+					System.out.println(query);
+					pstmt = conn.prepareStatement(query);
+					rs = pstmt.executeQuery();		
 					out.println("<table border=\"1\">");
 					ResultSetMetaData rsmd = rs.getMetaData();
 					int cnt = rsmd.getColumnCount();
-					out.println("<th>ENTER</th>");
 					for(int i = 1; i <= cnt; i++){
 						out.println("<th>" + rsmd.getColumnName(i) + "</th>");
 					}
 					while(rs.next()){
 						out.println("<tr>");
-						out.println("<td><input type=\"radio\" name =\"selectRoom\" value = \""+rs.getString(1)+"\"></td>");
-						out.println("<td>" + rs.getString(1) + "</td>");
+						out.println("<td>" + rs.getInt(1) + "</td>");
 						out.println("<td>" + rs.getString(2) + "</td>");
-						out.println("<td>" + rs.getInt(3) + "</td>");
-						out.println("<td>" + rs.getString(4) + "</td>");
-						out.println("<td>" + rs.getInt(5) + "</td>");
+						out.println("<td>" + rs.getString(3) + "</td>");
+						out.println("<td>" + rs.getInt(4) + "</td>");
 						out.println("</tr>");
 					}
 					out.println("</table>");
 				%>
-					<button class="goingGenre" onclick="location.href='enteredroom.jsp'"type="button">입장하기</button>
+				<button class="addMusic" onclick="location.href='selectsonginroom.jsp'"type="button">노래추가</button>
 				<%
-					query = "SELECT ROOMNO, ROOMNAME, PARTICIPANTSNO, IS_ADULT, REPORTNO FROM ROOM "
-							+"MINUS "
-							+"SELECT ROOMNO, ROOMNAME, PARTICIPANTSNO, IS_ADULT, REPORTNO FROM ROOM WHERE ROOMTYPE = 'g' ORDER BY PARTICIPANTSNO DESC";
+					query = "SELECT P.NAME, P.MEMBERSHIP, P.SEX FROM PLAYER P WHERE P.ROOMNO='tc37n' ORDER BY P.MEMBERSHIP DESC";
 					System.out.println(query);
 					pstmt = conn.prepareStatement(query);
 					rs = pstmt.executeQuery();
-					out.println("<h2>일반방 목록</h2>");
+					out.println("<h2>방 참가자</h2>");
 					out.println("<table border=\"1\">");
 					rsmd = rs.getMetaData();
 					cnt = rsmd.getColumnCount();
-					out.println("<th>ENTER</th>");
 					for(int i = 1; i <= cnt; i++){
 						out.println("<th>" + rsmd.getColumnName(i) + "</th>");
 					}
 					while(rs.next()){
 						out.println("<tr>");
-						out.println("<td><input type=\"radio\" name =\"selectRoom\" value = \""+rs.getString(1)+"\"></td>");
 						out.println("<td>" + rs.getString(1) + "</td>");
 						out.println("<td>" + rs.getString(2) + "</td>");
-						out.println("<td>" + rs.getInt(3) + "</td>");
-						out.println("<td>" + rs.getString(4) + "</td>");
-						out.println("<td>" + rs.getInt(5) + "</td>");
+						out.println("<td>" + rs.getString(3) + "</td>");
 						out.println("</tr>");
 					}
 					out.println("</table>");
 				%>
-				<button class="goingNormal" onclick="location.href='enteredroom.jsp'"type="button">입장하기</button>
-
+				
 			</div>
 		</div>
 		<%@include file="footer.jsp"%>

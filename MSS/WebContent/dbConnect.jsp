@@ -5,8 +5,8 @@
 
 <%
 	String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-	String USER_NAME ="team3";
-	String USER_PASSWD ="team3";
+	String USER_NAME ="university";
+	String USER_PASSWD ="comp322";
 	
 	Connection conn = null;
 	Statement stmt = null;
