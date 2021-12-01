@@ -17,3 +17,7 @@ function initButton(no){
 	document.getElementById('init').value = no;
 	document.getElementById('manage').submit();
 }
+
+function openSearchWindow(){
+	var searchWin = window.open("selectsonginroom.jsp", "Select Music", "width=570, height=350, resizable = no, scrollbars = no");
+}

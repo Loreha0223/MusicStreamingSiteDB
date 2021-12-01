@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- import JDBC package -->
 <%@ page language="java" import="java.text.*, java.sql.*" %>
-
+<%@include file="dbConnect.jsp"%>
 <!DOCTYPE html>
 <html>
 	<%@include file="head.jsp"%>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page language="java" import="java.text.*, java.sql.*"%>
+<%@include file="dbConnect.jsp"%>
 <!DOCTYPE html>
 <html>
 <%@include file="head.jsp"%>
@@ -44,11 +45,11 @@
 			while (result.next()) {
 				if (rowNums % 3 == 0)
 					out.println("<div class='boxes'>");
-				out.println("<div class='room'>");
+				out.println("<a href='enteredroom.jsp?no=" + result.getString(3) + "'><div class='room'>");
 				out.println("<span class='title'>" + result.getString(1) + "</span>");
 				out.println("<span>" + result.getString(2) + "명 참여중</span>");
-				out.println("<div class='enterButton' name='enterRoomNo' value='" + result.getString(3) + "'>입장</div>");
-				out.println("</div>");
+				out.println("<div class='enterButton'>입장</div>");
+				out.println("</div></a>");
 				if (rowNums % 3 == 2)
 					out.println("</div><br>");
 				rowNums++;

@@ -1,6 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="dbConnect.jsp"%>
+<%@ page language="java" import="java.text.*, java.sql.*"%>
+<style>
+#sidebar .side-enteredRoom h2 {
+	padding: 10px 0 0 0;
+	color: white;
+	font-size: 20px;
+}
+
+#sidebar .side-enteredRoom li {
+	padding: 6px 8px 6px 5px;
+	font-size: 16px;
+}
+</style>
 <div id="sidebar">
 	<div class="container">
 		<ul>
@@ -12,32 +24,49 @@
 				href="#">좋아요 표시한 곡</a></li>
 		</ul>
 		<ul class="side-playlist">
-			<h2>플레이리스트</h2>
+			<h2>나의 플레이리스트</h2>
 			<hr>
-			<ul>
-				<%
-					if (session.getAttribute("userid") == null) {
-						out.println("<li>로그인 후 확인가능합니다</li>");
+			<%
+				if (session.getAttribute("userid") == null) {
+					out.println("<li>로그인 후 확인가능합니다</li>");
+				} else if (session.getAttribute("account") == "admin") {
+					out.println("<li>일반 사용자 전용 기능입니다.</li>");
+				} else {
+					String userid = (String) session.getAttribute("userid");
+					ResultSet rs = null;
+					String sql = "SELECT Name FROM PLAYER NATURAL JOIN PLAYLIST WHERE PlayerID = '" + userid + "'";
+					rs = stmt.executeQuery(sql);
+					while (rs.next())
+						out.println("<li>" + rs.getString(1) + "</li>");
+					rs.close();
+					out.println("<li>추가하기</li>");
+				}
+			%>
+		</ul>
+		<ul class="side-enteredRoom">
+			<h2>참여중인 방</h2>
+			<hr>
+			<%
+				if (session.getAttribute("userid") == null) {
+					out.println("<li>로그인 후 확인가능합니다</li>");
+				} else {
+					String userid = (String) session.getAttribute("userid");
+					if (session.getAttribute("account") == "admin") {
+						out.println("<li>일반 사용자 전용 기능입니다.</li>");
 					} else {
-						String userid = (String) session.getAttribute("userid");
-						if (session.getAttribute("account") == "admin") {
-							out.println("<li>관리자님께는 제공되지 않는 서비스입니다</li>");
-						} else {
-							ResultSet rs = null;
-							String sql = "SELECT PL.ListNo, PL.Name FROM PLAYER P, PLAYLIST PL WHERE P.PlayerID = '" + userid
-									+ "' AND P.PlayerID = PL.PlayerID";
-							rs = stmt.executeQuery(sql);
+						ResultSet rs = null;
+						String sql = "SELECT RoomNo, RoomName FROM PLAYER NATURAL JOIN ROOM WHERE PlayerID='"
+								+ session.getAttribute("userid") + "'";
+						rs = stmt.executeQuery(sql);
 
-							while (rs.next()) {
-								// 				out.println("<td>"+rs.getString(1)+"</td>");
-								// 				out.println("<li class=\"listno\" onclick=\"printMusicList(this.value)\" value=\""+rs.getString(1)+"\">"+rs.getString(2)+"</li>");
-								out.println("<li>" + rs.getString(2) + "</li>");
-							}
-							rs.close();
+						while (rs.next()) {
+							out.println("<li><a href='enteredroom.jsp?no=" + rs.getString(1) + "'>" + rs.getString(2)
+									+ "</a></li>");
 						}
+						rs.close();
 					}
-				%>
-			</ul>
+				}
+			%>
 		</ul>
 	</div>
 </div>

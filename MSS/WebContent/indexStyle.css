@@ -140,11 +140,12 @@ header .container a:hover {
     margin: 20px;
 }
 #sidebar li{
-    font-size: 18px;
+	font-size: 18px;
     color: #b3b3b3;
     display: flex;
     align-items: center;
     transition: 0.4s ease;
+    list-style : none;
 }
 #sidebar i {
     font-size : 20px;
@@ -162,7 +163,7 @@ header .container a:hover {
     padding: 0;
 }
 #sidebar li{
-    list-style : none;
+
 }
 #sidebar li:hover{
     color: white;
@@ -170,18 +171,15 @@ header .container a:hover {
 #sidebar a:hover {
     color: white;
 }
-
 #sidebar .side-playlist h2{
     padding: 10px 0 0 0 ; 
     color:white;
     font-size: 20px;
 }
-
 #sidebar .side-playlist li{
     padding: 6px 8px 6px 5px;
     font-size : 16px;
 }
-
 /* banner */
 #banner h2{
     padding : 10px;
@@ -289,6 +287,10 @@ header .container a:hover {
 .boxes{
     display:flex;
     justify-content: flex-start;
+}
+
+a{
+	text-decoration: none; !important
 }
 
 .album{
