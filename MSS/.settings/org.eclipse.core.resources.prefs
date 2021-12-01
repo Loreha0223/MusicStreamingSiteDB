@@ -3,9 +3,8 @@
 >>>>>>>=branch 'main' of https\://github.com/Loreha0223/MusicStreamingSiteDB.git
 eclipse.preferences.version=1
 encoding//WebContent/header.jsp=UTF-8
-encoding//WebContent/hotroom.jsp=UTF-8
 encoding//WebContent/index.jsp=UTF-8
 encoding//WebContent/join.jsp=UTF-8
 encoding//WebContent/joinSuccess.jsp=UTF-8
+encoding//WebContent/playlist.jsp=UTF-8
 encoding//WebContent/sideBar.jsp=UTF-8
-encoding//WebContent/viewplaylist.jsp=UTF-8

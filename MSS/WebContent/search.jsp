@@ -45,7 +45,7 @@
 			while (result.next()) {
 				if (rowNums % 3 == 0)
 					out.println("<div class='boxes'>");
-				out.println("<a href='enteredroom.jsp?no=" + result.getString(3) + "'><div class='room'>");
+				out.println("<a href='room.jsp?no=" + result.getString(3) + "'><div class='room'>");
 				out.println("<span class='title'>" + result.getString(1) + "</span>");
 				out.println("<span>" + result.getString(2) + "명 참여중</span>");
 				out.println("<div class='enterButton'>입장</div>");

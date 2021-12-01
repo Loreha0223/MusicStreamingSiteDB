@@ -34,12 +34,12 @@
 				} else {
 					String userid = (String) session.getAttribute("userid");
 					ResultSet rs = null;
-					String sql = "SELECT Name FROM PLAYER NATURAL JOIN PLAYLIST WHERE PlayerID = '" + userid + "'";
+					String sql = "SELECT ListNo, Name FROM PLAYLIST WHERE PlayerID = '" + userid + "'";
 					rs = stmt.executeQuery(sql);
 					while (rs.next())
-						out.println("<li>" + rs.getString(1) + "</li>");
+						out.println("<li><a href='playlist.jsp?playListNo=" + rs.getString(1) + "'>" + rs.getString(2) + "</a></li>");
 					rs.close();
-					out.println("<li><a>추가하기</a></li>");
+					out.println("<li><a href='addPlayList.jsp'>추가하기</a></li>");
 				}
 			%>
 		</ul>
@@ -60,7 +60,7 @@
 						rs = stmt.executeQuery(sql);
 
 						while (rs.next()) {
-							out.println("<li><a href='enteredroom.jsp?no=" + rs.getString(1) + "'>" + rs.getString(2)
+							out.println("<li><a href='room.jsp?no=" + rs.getString(1) + "'>" + rs.getString(2)
 									+ "</a></li>");
 						}
 						rs.close();

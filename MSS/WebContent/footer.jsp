@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <footer>
 	<div class="container">
 		<div class="playing-album">
 			<img src="src/cover.jpg">
 			<div class="album-info">
-				<span id="title" class="title">Another Life</span> <span id="singer">Kyle Patrick</span>
+				<span id="title" class="title">None</span> <span id="singer">-</span>
 			</div>
 			<i class="fa fa-heart" id="heart-icon" aria-hidden="true"></i>
 		</div>
@@ -19,11 +19,11 @@
 					class="fa fa-repeat play" aria-hidden="true"></i>
 			</div>
 			<div class="progress-bar">
-				<div id="current">0:00</div>
+				<div id="current">-:--</div>
 				<div id="bar">
 					<div id="progress"></div>
 				</div>
-				<div id="end">4:16</div>
+				<div id="end">-:--</div>
 			</div>
 		</div>
 		<div class="volume">
@@ -34,8 +34,7 @@
 						class="fa fa-list-ul" aria-hidden="true"></i>
 				</div>
 				<div class="volume-bar">
-					<input type="range" , min="0" , max="100" value="40" id="myRange"
-						class="slider">
+					<input type="range" min="0" max="100" value="40" id="myRange" class="slider">
 				</div>
 			</div>
 		</div>

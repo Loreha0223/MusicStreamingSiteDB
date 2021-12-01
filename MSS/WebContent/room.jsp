@@ -5,16 +5,79 @@
 <%@include file="dbConnect.jsp"%>
 
 <!DOCTYPE html>
+<style>
+
+	.music-long{
+		width: 100%;
+		margin: 5px;
+		padding: 10px;
+		background: #333333;
+		border-radius: 5px;
+		transition: 0.4s ease;
+		vertical-align: middle;
+	
+	}
+	
+	.music-long:hover{
+		background: #444444;
+	    cursor:pointer;
+	}
+	
+	.music-long img{
+		width: 40px;
+	    height: 40px;
+	    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	}
+	
+	.music-long img:hover{
+    	box-shadow: 10px;
+	}
+	
+	.music-long span{
+	    color: rgba(255, 255, 255, 0.787);
+	    white-space:nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	}
+	
+	.music-long .title{
+	    font-size: 20px;
+	    font-weight:bold;
+	    color: white;
+	}
+
+</style>
+<%!public void printMusics(JspWriter out, Connection conn, String query) {
+	int rowNums = 0;
+	try {
+		ResultSet result;
+		PreparedStatement pstmt = conn.prepareStatement(query);
+		result = pstmt.executeQuery();
+
+		while (result.next()) {
+			out.println("<div class='music-long' onclick=\"setPlayer('" + result.getString(3) + "', '" + result.getString(1) + "', '" + result.getString(2) + "')\"><table><tr>");
+			out.println("<td><img src='src/cover1.jpg'></td>");
+			out.println("<td style='padding-left: 10px;'><span class='title'>" + result.getString(1) + "</span>");
+			out.println("<span>" + result.getString(2) + "</span></td>");
+			out.println("</tr></table></div>");
+			rowNums++;
+		}
+		if(rowNums == 0)
+			out.println("검색 결과가 없습니다.");
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+}%>
 <html lang="en">
 	<%@include file="head.jsp"%>
 	<body>
 	<script type="text/javascript">
 		function openSearchWindow(){
-			var searchWin = window.open("selectsonginroom.jsp", "Select Music", "width=570, height=350, resizable = no, scrollbars = no");
+			var searchWin = window.open("selectSong.jsp", "Select Music", "width=570, height=350, resizable = no, scrollbars = no");
 		}
 		
 		function addMusicToList(musicID){
-			location.replace("enteredroom.jsp?no=<%=request.getParameter("no")%>&addMusic=" + musicID);
+			location.replace("room.jsp?no=<%=request.getParameter("no")%>&addMusic=" + musicID);
 		}
 	</script>
 	<%
@@ -65,48 +128,20 @@
 						out.println("<h5><h3 style='display: inline;'>"+ result.getInt(2) + "</h3>명 참가중</h5>");
 					}
 					out.println("<p/><h2>방의 플레이리스트</h2>");
-					query ="SELECT H.ORDERNO, M.MUSICTITLE, S.SNAME, M.LIKES FROM HAS H, MUSIC M, SINGER S, RELEASEMENT R WHERE H.ROOMNO='" + roomNo + "' AND H.MUSICID = M.MUSICID AND M.ALBUMID = R.ALBUMID AND R.SINGERID = S.SINGERID";		
-					pstmt = conn.prepareStatement(query);
-					result = pstmt.executeQuery();		
-					out.println("<table border=\"1\">");
-					ResultSetMetaData rsmd = result.getMetaData();
-					int cnt = rsmd.getColumnCount();
-					for(int i = 1; i <= cnt; i++){
-						out.println("<th>" + rsmd.getColumnName(i) + "</th>");
-					}
-					while(result.next()){
-						out.println("<tr>");
-						out.println("<td>" + result.getInt(1) + "</td>");
-						out.println("<td>" + result.getString(2) + "</td>");
-						out.println("<td>" + result.getString(3) + "</td>");
-						out.println("<td>" + result.getInt(4) + "</td>");
-						out.println("</tr>");
-					}
-					out.println("</table>");
+					query ="SELECT MusicTitle, SName, MusicID FROM ((MUSIC NATURAL JOIN SONG) NATURAL JOIN SINGER) NATURAL JOIN HAS WHERE RoomNo='" + roomNo +"' ORDER BY OrderNo";		
+					printMusics(out, conn, query);
 				%>
 				<input class="addMusic" onclick="openSearchWindow()" type="button" value="노래추가">
 				<%
-					query = "SELECT P.NAME, P.MEMBERSHIP, P.SEX FROM PLAYER P WHERE P.ROOMNO='" + roomNo + "' ORDER BY P.MEMBERSHIP DESC";
+					query = "SELECT P.NAME FROM PLAYER P WHERE P.ROOMNO='" + roomNo + "' ORDER BY P.MEMBERSHIP DESC";
 					System.out.println(query);
 					pstmt = conn.prepareStatement(query);
 					result = pstmt.executeQuery();
 					out.println("<h2>방 참가자</h2>");
-					out.println("<table border=\"1\">");
-					rsmd = result.getMetaData();
-					cnt = rsmd.getColumnCount();
-					for(int i = 1; i <= cnt; i++){
-						out.println("<th>" + rsmd.getColumnName(i) + "</th>");
-					}
 					while(result.next()){
-						out.println("<tr>");
-						out.println("<td>" + result.getString(1) + "</td>");
-						out.println("<td>" + result.getString(2) + "</td>");
-						out.println("<td>" + result.getString(3) + "</td>");
-						out.println("</tr>");
+						out.println(result.getString(1) + "<br>");
 					}
-					out.println("</table>");
 				%>
-				
 			</div>
 		</div>
 		<%@include file="footer.jsp"%>
