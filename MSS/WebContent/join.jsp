@@ -9,7 +9,7 @@
 <body>
 	<%@include file="header.jsp"%>
 	<%@include file="sideBar.jsp"%>
-	<div id="login-contents">
+	<div class="contentBox">
 		<div class="container">
 			<h2>회원가입</h2>
 			<%-- <%--             <% --%>

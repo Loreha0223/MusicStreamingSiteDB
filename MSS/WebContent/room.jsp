@@ -86,32 +86,39 @@
 	String query;
 	PreparedStatement pstmt;
 	ResultSet result;
-	if(addMusic != null){
-		query = "SELECT COUNT(*) FROM HAS WHERE RoomNo='" + roomNo + "'";
-		pstmt = conn.prepareStatement(query);
-		result = pstmt.executeQuery();
-		result.next();
-		query = "INSERT INTO HAS VALUES('" + roomNo + "', '" + addMusic + "', " + result.getInt(1) + 1 + ")";
-		pstmt = conn.prepareStatement(query);
-		pstmt.executeUpdate();
+	if(session.getAttribute("userid") == null){
+		response.sendRedirect("login.jsp");
 	}
-	if(session.getAttribute("enteredRoom") != roomNo){
-		if(session.getAttribute("enteredRoom") != null){
-			query = "UPDATE PLAYER SET RoomNo='' WHERE PlayerID='" + session.getAttribute("userid") + "'";
+	else if(roomNo == null){
+		response.sendRedirect("index.jsp");
+	}else{
+		if(addMusic != null){
+			query = "SELECT COUNT(*) FROM HAS WHERE RoomNo='" + roomNo + "'";
 			pstmt = conn.prepareStatement(query);
-			pstmt.executeUpdate();
-			query = "UPDATE ROOM SET ParticipantsNo=ParticipantsNo-1 WHERE RoomNo='" + session.getAttribute("enteredRoom") + "'";
+			result = pstmt.executeQuery();
+			result.next();
+			query = "INSERT INTO HAS VALUES('" + roomNo + "', '" + addMusic + "', " + result.getInt(1) + 1 + ")";
 			pstmt = conn.prepareStatement(query);
 			pstmt.executeUpdate();
 		}
-		query = "UPDATE PLAYER SET RoomNo='" + roomNo + "' WHERE PlayerID='" + session.getAttribute("userid") + "'";
-		pstmt = conn.prepareStatement(query);
-		System.out.println(query);
-		pstmt.executeUpdate();
-		query = "UPDATE ROOM SET ParticipantsNo=ParticipantsNo+1 WHERE RoomNo='" + roomNo + "'";
-		pstmt = conn.prepareStatement(query);
-		pstmt.executeUpdate();
-		session.setAttribute("enteredRoom", roomNo);
+		if(session.getAttribute("enteredRoom") != roomNo){
+			if(session.getAttribute("enteredRoom") != null){
+				query = "UPDATE PLAYER SET RoomNo='' WHERE PlayerID='" + session.getAttribute("userid") + "'";
+				pstmt = conn.prepareStatement(query);
+				pstmt.executeUpdate();
+				query = "UPDATE ROOM SET ParticipantsNo=ParticipantsNo-1 WHERE RoomNo='" + session.getAttribute("enteredRoom") + "'";
+				pstmt = conn.prepareStatement(query);
+				pstmt.executeUpdate();
+			}
+			query = "UPDATE PLAYER SET RoomNo='" + roomNo + "' WHERE PlayerID='" + session.getAttribute("userid") + "'";
+			pstmt = conn.prepareStatement(query);
+			System.out.println(query);
+			pstmt.executeUpdate();
+			query = "UPDATE ROOM SET ParticipantsNo=ParticipantsNo+1 WHERE RoomNo='" + roomNo + "'";
+			pstmt = conn.prepareStatement(query);
+			pstmt.executeUpdate();
+			session.setAttribute("enteredRoom", roomNo);
+		}
 	}
 	%>
 		<%@include file="header.jsp"%>

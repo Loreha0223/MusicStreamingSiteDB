@@ -15,7 +15,7 @@
 
 			<ul class="nav-links">
 				<li><a class="nav" href="chart.jsp">차트</a></li>
-				<li><a class="nav" href="#.html">방 목록</a></li>
+				<li><a class="nav" href="selectRoom.jsp">방 목록</a></li>
 				<%
 					if (session.getAttribute("userid") == null) {
 						out.println("<li><a class='nav' href='login.jsp'><i class='fa fa-user'></i></a></li>");

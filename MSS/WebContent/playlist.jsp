@@ -99,7 +99,6 @@
 					}
 
 					query = "SELECT NAME FROM PLAYLIST WHERE ListNo = '" + playListNo + "'";
-					System.out.println(query);
 					PreparedStatement pstmt = conn.prepareStatement(query);
 					result = pstmt.executeQuery();
 					result.next();

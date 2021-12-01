@@ -8,8 +8,7 @@
 	ResultSet result = stmt.executeQuery(query);
 	result.next();
 	int currentListNo = Integer.parseInt(result.getString(1).substring(2));
-	System.out.println("PL" + currentListNo + 1);
 	query = "INSERT INTO PLAYLIST VALUES ('" + session.getAttribute("userid") + "', 'PL" + (currentListNo + 1) + "', 'Untitled')";
 	stmt.executeUpdate(query);
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("playlist.jsp?playListNo="+ "PL" + (currentListNo + 1));
 %>
