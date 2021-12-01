@@ -61,7 +61,7 @@
 				rowNums++;
 			}
 			if (rowNums == 0)
-				out.println("빈 플레이리스트<br>");
+				out.println("<center>빈 플레이리스트</center><br>");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -69,9 +69,8 @@
 <%@include file="head.jsp"%>
 <body>
 	<script type="text/javascript">
-		function openSearchw(){
+		function openSearchWindow(){
 			var searchWin = window.open("selectSong.jsp", "Select Music", "width=570, height=350, resizable=no, scrollbars=no");
-			console.log("hi!!!");
 		}
 		
 		function addMusicToList(musicID){
@@ -105,14 +104,13 @@
 					result = pstmt.executeQuery();
 					result.next();
 					out.println("<h2>" + result.getString(1) + "</h2>");
-					out.println("<a href='rename.jsp?playListNo=" + playListNo + "'>플레이리스트 이름 설정</a><br>");
+					out.println("<a href='rename.jsp?playListNo=" + playListNo + "' style='color: #d2d2d2'>플레이리스트 이름 설정</a><br>");
 					query = "SELECT MusicTitle, SName, MusicID FROM ((MUSICLIST NATURAL JOIN MUSIC) NATURAL JOIN SONG) NATURAL JOIN SINGER WHERE ListNo='"
 							+ playListNo + "'";
 					printMusics(out, conn, query);
 				}
 			%>
-			<input class="addMusic" onclick="openSearchw()" type="button"
-				value="노래추가">
+			<a href="#" onclick="openSearchWindow()" style="color: #d2d2d2;"><div class="music-long" style="text-align: center;">+</div></a>
 		</div>
 	</div>
 	<%@include file="footer.jsp"%>

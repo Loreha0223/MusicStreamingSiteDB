@@ -131,7 +131,7 @@
 					query ="SELECT MusicTitle, SName, MusicID FROM ((MUSIC NATURAL JOIN SONG) NATURAL JOIN SINGER) NATURAL JOIN HAS WHERE RoomNo='" + roomNo +"' ORDER BY OrderNo";		
 					printMusics(out, conn, query);
 				%>
-				<input class="addMusic" onclick="openSearchWindow()" type="button" value="노래추가">
+				<a href="#" onclick="openSearchWindow()" style="color: #d2d2d2;"><div class="music-long" style="text-align: center;">+</div></a>
 				<%
 					query = "SELECT P.NAME FROM PLAYER P WHERE P.ROOMNO='" + roomNo + "' ORDER BY P.MEMBERSHIP DESC";
 					System.out.println(query);

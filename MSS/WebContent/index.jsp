@@ -82,7 +82,6 @@
 				String sql = "SELECT * FROM (SELECT RoomName, ParticipantsNo, RoomNo FROM ROOM ORDER BY PARTICIPANTSNO DESC) WHERE ROWNUM <= 10";
 				printRooms(out, conn, sql);
 			%>
-
 		</div>
 	</div>
 	<%@include file="footer.jsp"%>

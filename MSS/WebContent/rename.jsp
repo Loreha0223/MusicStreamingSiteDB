@@ -40,7 +40,7 @@
 								query = "UPDATE PLAYLIST SET NAME='" + newName + "' WHERE ListNo='" + playListNo + "'";
 								pstmt = conn.prepareStatement(query);
 								result = pstmt.executeQuery();
-								out.println("변경하였습니다.");
+								response.sendRedirect("playlist.jsp?playListNo=" + playListNo);
 							}
 						}
 					}
