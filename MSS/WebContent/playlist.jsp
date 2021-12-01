@@ -83,7 +83,7 @@
 		<div class="container">
 			<%
 				if (session.getAttribute("userid") == null) {
-					out.println("<li>로그인 후 확인가능합니다.</li>");
+					response.sendRedirect("login.jsp");
 				} else if (session.getAttribute("account") == "admin") {
 					out.println("<li>일반 사용자 전용 기능입니다.</li>");
 				} else {
@@ -102,8 +102,8 @@
 					PreparedStatement pstmt = conn.prepareStatement(query);
 					result = pstmt.executeQuery();
 					result.next();
-					out.println("<h2>" + result.getString(1) + "</h2>");
-					out.println("<a href='rename.jsp?playListNo=" + playListNo + "' style='color: #d2d2d2'>플레이리스트 이름 설정</a><br>");
+					out.println("<h2 style='display: inline;'>" + result.getString(1) + "</h2>");
+					out.println(" | <a href='rename.jsp?playListNo=" + playListNo + "' style='color: #d2d2d2'>이름 설정</a> | <a href='delete.jsp?playListNo=" + playListNo + "' style='color: #d2d2d2'>삭제</a><br>");
 					query = "SELECT MusicTitle, SName, MusicID FROM ((MUSICLIST NATURAL JOIN MUSIC) NATURAL JOIN SONG) NATURAL JOIN SINGER WHERE ListNo='"
 							+ playListNo + "'";
 					printMusics(out, conn, query);
