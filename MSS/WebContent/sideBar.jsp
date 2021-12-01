@@ -39,7 +39,7 @@
 					while (rs.next())
 						out.println("<li>" + rs.getString(1) + "</li>");
 					rs.close();
-					out.println("<li>추가하기</li>");
+					out.println("<li><a>추가하기</a></li>");
 				}
 			%>
 		</ul>
